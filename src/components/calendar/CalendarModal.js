@@ -7,7 +7,7 @@ import Swal from 'sweetalert2'
 import { useForm } from '../../hook/useForm';
 import { useDispatch, useSelector } from 'react-redux'
 import { openModal } from '../actions/modalAction'
-import { addCalendar, startSetActive } from '../actions/calendarAction'
+import { addCalendar, startSetActive, updateCalendar } from '../actions/calendarAction'
 
 const customStyles = {
     content: {
@@ -27,6 +27,7 @@ export const CalendarModal = () => {
 
     const { isOpen } = useSelector(state => state.modal);
     const { active } = useSelector(state => state.calendar);
+    const { id, bgcolor, user } = active;
 
     const dispatch = useDispatch();
 
@@ -42,10 +43,10 @@ export const CalendarModal = () => {
     }
 
     const [formsInput, handleInputChange, formReset] = useForm({
-        start: active.start,
-        end: active.end,
-        title: active.title,
-        description: active.description
+        start: active.start ? active.start : '',
+        end: active.end ? active.end : '',
+        title: active.title ? active.title : '',
+        description: active.description ? active.description : ''
     });
     const { start, end, title, description } = formsInput;
 
@@ -85,14 +86,29 @@ export const CalendarModal = () => {
         }
 
 
-        dispatch(addCalendar({
-            ...formsInput,
-            bgcolor: '#fafafa',
-            user: {
-                uid: 123456,
-                name: 'Favio Amarilla Miño'
-            }
-        }));
+        if (id !== '') {
+
+            dispatch(updateCalendar({
+                ...formsInput,
+                id,
+                user,
+                bgcolor
+            }));
+
+        } else {
+            dispatch(addCalendar({
+                ...formsInput,
+                id: new Date().getTime(),
+                bgcolor: '#fafafa',
+                user: {
+                    uid: 123456,
+                    name: 'Favio Amarilla Miño updated'
+                }
+            }));
+
+        }
+
+
 
 
         closeModal();

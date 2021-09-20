@@ -22,11 +22,11 @@ export const CalendarScreen = () => {
 
     const onSelectEvent = (e) => {
 
-        dispatch(startSetActive(e));
     }
 
     const onDoubleClick = (e) => {
 
+        dispatch(startSetActive(e));
         dispatch(openModal(true));
     }
 

@@ -11,6 +11,11 @@ export const addCalendar = (calendar) => ({
     payload: calendar
 });
 
+export const updateCalendar = (calendar) => ({
+    type: types.CALENDAR_UPDATE,
+    payload: calendar
+});
+
 export const startSetList = (calendar) => ({
     type: types.CALENDAR_LIST,
     payload: calendar
