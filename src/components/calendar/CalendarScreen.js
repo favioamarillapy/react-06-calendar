@@ -8,7 +8,7 @@ import { Navbar } from '../ui/Navbar'
 import { CalendarEvent } from './CalendarEvent';
 import { CalendarModal } from './CalendarModal';
 import { openModal } from '../actions/modalAction';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { startSetActive } from '../actions/calendarAction';
 import { AddNewEventFab } from '../ui/AddNewEventFab';
 
@@ -16,6 +16,7 @@ import { AddNewEventFab } from '../ui/AddNewEventFab';
 export const CalendarScreen = () => {
 
     const dispatch = useDispatch();
+    const { events } = useSelector(state => state.calendar);
 
     const localizer = momentLocalizer(moment);
 
@@ -36,18 +37,6 @@ export const CalendarScreen = () => {
 
     const [lastView, setLastView] = useState(localStorage.getItem('calendar-last-view') || 'month')
 
-    const myEventsList = [
-        {
-            title: 'Event 1',
-            start: moment().toDate(),
-            end: moment().add(2, 'hours').toDate(),
-            bgcolor: '#fafafa',
-            user: {
-                uid: 123456,
-                name: 'Favio Amarilla Miño'
-            }
-        }
-    ]
 
     return (
         <div className="calendar-screen">
@@ -55,7 +44,7 @@ export const CalendarScreen = () => {
 
             <Calendar
                 localizer={localizer}
-                events={myEventsList}
+                events={events}
                 startAccessor="start"
                 endAccessor="end"
                 view={lastView}

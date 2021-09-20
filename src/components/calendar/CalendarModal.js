@@ -7,7 +7,7 @@ import Swal from 'sweetalert2'
 import { useForm } from '../../hook/useForm';
 import { useDispatch, useSelector } from 'react-redux'
 import { openModal } from '../actions/modalAction'
-import { startSetActive } from '../actions/calendarAction'
+import { addCalendar, startSetActive } from '../actions/calendarAction'
 
 const customStyles = {
     content: {
@@ -35,39 +35,39 @@ export const CalendarModal = () => {
     }
 
     const closeModal = () => {
-        
+
         dispatch(startSetActive({}));
 
         dispatch(openModal(false));
     }
 
     const [formsInput, handleInputChange, formReset] = useForm({
-        startDate: active.start,
-        endDate: active.end,
+        start: active.start,
+        end: active.end,
         title: active.title,
         description: active.description
     });
-    const { startDate, endDate, title, description } = formsInput;
+    const { start, end, title, description } = formsInput;
 
     const setStartDate = (e) => {
         formReset({
             ...formsInput,
-            startDate: e,
+            start: e,
         });
     }
 
     const setEndDate = (e) => {
         formReset({
             ...formsInput,
-            endDate: e,
+            end: e,
         });
     }
 
     const handleSave = (e) => {
         e.preventDefault();
 
-        const momentStart = moment(startDate);
-        const momentEnd = moment(endDate);
+        const momentStart = moment(start);
+        const momentEnd = moment(end);
 
         if (momentStart.isSameOrAfter(momentEnd)) {
             Swal.fire('The end date must be greater than the start date');
@@ -83,6 +83,16 @@ export const CalendarModal = () => {
             Swal.fire('The field description is required');
             return;
         }
+
+
+        dispatch(addCalendar({
+            ...formsInput,
+            bgcolor: '#fafafa',
+            user: {
+                uid: 123456,
+                name: 'Favio Amarilla Miño'
+            }
+        }));
 
 
         closeModal();
@@ -109,7 +119,7 @@ export const CalendarModal = () => {
                         <label>  Start date</label>
                         <DateTimePicker
                             onChange={setStartDate}
-                            value={startDate}
+                            value={start}
                             className="form-control"
                         />
                     </div>
@@ -118,8 +128,8 @@ export const CalendarModal = () => {
                         <label>End date</label>
                         <DateTimePicker
                             onChange={setEndDate}
-                            value={endDate}
-                            minDate={startDate}
+                            value={end}
+                            minDate={start}
                             className="form-control"
                         />
                     </div>
