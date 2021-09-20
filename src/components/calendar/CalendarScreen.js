@@ -7,10 +7,14 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { Navbar } from '../ui/Navbar'
 import { CalendarEvent } from './CalendarEvent';
 import { CalendarModal } from './CalendarModal';
+import { openModal } from '../actions/modalAction';
+import { useDispatch } from 'react-redux';
 
 
 export const CalendarScreen = () => {
 
+    const dispatch = useDispatch();
+    
     const localizer = momentLocalizer(moment);
 
     const onSelectEvent = (e) => {
@@ -19,6 +23,7 @@ export const CalendarScreen = () => {
 
     const onDoubleClick = (e) => {
 
+        dispatch(openModal(true));
     }
 
     const onView = (e) => {

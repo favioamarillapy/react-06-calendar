@@ -5,6 +5,8 @@ import moment from 'moment'
 import Swal from 'sweetalert2'
 
 import { useForm } from '../../hook/useForm';
+import { useDispatch, useSelector } from 'react-redux'
+import { openModal } from '../actions/modalAction'
 
 const customStyles = {
     content: {
@@ -23,14 +25,15 @@ Modal.setAppElement('#root');
 export const CalendarModal = () => {
 
     const now = moment();
-    const [modalIsOpen, setIsOpen] = useState(true);
+    const { isOpen } = useSelector(state => state.modal);
+    const dispatch = useDispatch();
 
     const afterOpenModal = () => {
 
     }
 
     const closeModal = () => {
-        setIsOpen(false);
+        dispatch(openModal(false));
     }
 
 
@@ -79,15 +82,13 @@ export const CalendarModal = () => {
 
 
         closeModal();
-
-        console.log(formsInput);
     }
 
 
     return (
         <div>
             <Modal
-                isOpen={modalIsOpen}
+                isOpen={isOpen}
                 onAfterOpen={afterOpenModal}
                 onRequestClose={closeModal}
                 closeTimeoutMS={200}

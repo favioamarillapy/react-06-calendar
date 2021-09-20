@@ -1,13 +1,13 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk';
-import { uiReducer } from '../reducers/uiReducer';
+import { modalReducer } from '../reducers/modalReducer';
 
 
 const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
 
 const reducers = combineReducers({
-    modal: uiReducer
+    modal: modalReducer
 });
 
 export const store = createStore(
