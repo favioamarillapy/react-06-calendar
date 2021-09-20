@@ -7,6 +7,7 @@ import Swal from 'sweetalert2'
 import { useForm } from '../../hook/useForm';
 import { useDispatch, useSelector } from 'react-redux'
 import { openModal } from '../actions/modalAction'
+import { startSetActive } from '../actions/calendarAction'
 
 const customStyles = {
     content: {
@@ -24,7 +25,6 @@ Modal.setAppElement('#root');
 
 export const CalendarModal = () => {
 
-    const now = moment();
     const { isOpen } = useSelector(state => state.modal);
     const { active } = useSelector(state => state.calendar);
 
@@ -35,12 +35,15 @@ export const CalendarModal = () => {
     }
 
     const closeModal = () => {
+        
+        dispatch(startSetActive({}));
+
         dispatch(openModal(false));
     }
 
     const [formsInput, handleInputChange, formReset] = useForm({
         startDate: active.start,
-        endDate:  active.end,
+        endDate: active.end,
         title: active.title,
         description: active.description
     });

@@ -63,6 +63,18 @@ body {
 }
 
 .react-datetime-picker__wrapper {
-    border: 0px solid grey !important; 
+    border: 0px solid grey !important;
 
+}
+
+
+
+/* Button fab */
+
+.btn-fab {
+    border-radius: 100%;
+    bottom       : 50px;
+    font-size    : 30px;
+    position     : fixed;
+    right        : 50px;
 }
