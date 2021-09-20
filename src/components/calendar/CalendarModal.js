@@ -7,7 +7,7 @@ import Swal from 'sweetalert2'
 import { useForm } from '../../hook/useForm';
 import { useDispatch, useSelector } from 'react-redux'
 import { openModal } from '../actions/modalAction'
-import { addCalendar, startSetActive, updateCalendar } from '../actions/calendarAction'
+import { addCalendar, deleteCalendar, startSetActive, updateCalendar } from '../actions/calendarAction'
 
 const customStyles = {
     content: {
@@ -86,7 +86,7 @@ export const CalendarModal = () => {
         }
 
 
-        if (id !== '') {
+        if (id) {
 
             dispatch(updateCalendar({
                 ...formsInput,
@@ -109,7 +109,12 @@ export const CalendarModal = () => {
         }
 
 
+        closeModal();
+    }
 
+    const handleDelete = () => {
+
+        dispatch(deleteCalendar());
 
         closeModal();
     }
@@ -184,6 +189,19 @@ export const CalendarModal = () => {
                         <i className="far fa-save"></i>
                         <span> Save</span>
                     </button>
+
+                    {
+                        (id) && (
+                            <button
+                                type="submit"
+                                className="btn btn-outline-primary btn-block"
+                                onClick={handleDelete}
+                            >
+                                <i className="far fa-trash"></i>
+                                <span> Delete</span>
+                            </button>
+                        )
+                    }
 
                 </form>
 

@@ -16,6 +16,11 @@ export const updateCalendar = (calendar) => ({
     payload: calendar
 });
 
+export const deleteCalendar = () => ({
+    type: types.CALENDAR_DELETE
+});
+
+
 export const startSetList = (calendar) => ({
     type: types.CALENDAR_LIST,
     payload: calendar

@@ -1,4 +1,3 @@
-import moment from "moment";
 import { types } from "../types/types";
 
 
@@ -9,8 +8,6 @@ const initialState = {
 
 export const calendarReducer = (state = initialState, action) => {
 
-    console.log('add event', action);
-    
     switch (action.type) {
         case types.CALENDAR_LIST:
             return {
@@ -38,9 +35,15 @@ export const calendarReducer = (state = initialState, action) => {
                 events: state.events.map(event => event.id === action.payload.id ? action.payload : event)
             }
 
+        case types.CALENDAR_DELETE:
+            return {
+                ...state,
+                events: state.events.filter(event => event.id !== state.active.id),
+                active: {}
+            }
+
         default:
             return state
     }
-
 
 }
