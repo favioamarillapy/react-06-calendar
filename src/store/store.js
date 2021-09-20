@@ -1,5 +1,7 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk';
+
+import { calendarReducer } from '../reducers/calendarReducer';
 import { modalReducer } from '../reducers/modalReducer';
 
 
@@ -7,7 +9,8 @@ const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOO
 
 
 const reducers = combineReducers({
-    modal: modalReducer
+    modal: modalReducer,
+    calendar: calendarReducer
 });
 
 export const store = createStore(

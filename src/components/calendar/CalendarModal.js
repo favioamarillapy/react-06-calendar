@@ -26,6 +26,8 @@ export const CalendarModal = () => {
 
     const now = moment();
     const { isOpen } = useSelector(state => state.modal);
+    const { active } = useSelector(state => state.calendar);
+
     const dispatch = useDispatch();
 
     const afterOpenModal = () => {
@@ -36,12 +38,11 @@ export const CalendarModal = () => {
         dispatch(openModal(false));
     }
 
-
     const [formsInput, handleInputChange, formReset] = useForm({
-        startDate: now.toDate(),
-        endDate: now.add(1, 'hours').toDate(),
-        title: '',
-        description: ''
+        startDate: active.start,
+        endDate:  active.end,
+        title: active.title,
+        description: active.description
     });
     const { startDate, endDate, title, description } = formsInput;
 

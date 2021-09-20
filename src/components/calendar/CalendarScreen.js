@@ -9,16 +9,18 @@ import { CalendarEvent } from './CalendarEvent';
 import { CalendarModal } from './CalendarModal';
 import { openModal } from '../actions/modalAction';
 import { useDispatch } from 'react-redux';
+import { startSetActive } from '../actions/calendarAction';
 
 
 export const CalendarScreen = () => {
 
     const dispatch = useDispatch();
-    
+
     const localizer = momentLocalizer(moment);
 
     const onSelectEvent = (e) => {
-
+        
+        dispatch(startSetActive(e));
     }
 
     const onDoubleClick = (e) => {
