@@ -132,7 +132,16 @@ export const CalendarModal = () => {
                 overlayClassName="modal-overlay"
             >
 
-                <h1> New Event </h1>
+                {
+                    (active != null) ?
+                        (
+                            <h1> Update Event </h1>
+                        ) :
+                        (
+                            <h1> New Event </h1>
+                        )
+                }
+
                 <hr />
                 <form className="container">
 
