@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { openModal } from '../actions/modalAction';
+import { openModal } from '../../actions/modalAction';
 
 export const AddNewEventFab = () => {
 

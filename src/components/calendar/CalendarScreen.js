@@ -7,9 +7,9 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { Navbar } from '../ui/Navbar'
 import { CalendarEvent } from './CalendarEvent';
 import { CalendarModal } from './CalendarModal';
-import { openModal } from '../actions/modalAction';
+import { openModal } from '../../actions/modalAction';
 import { useDispatch, useSelector } from 'react-redux';
-import { startSetActive } from '../actions/calendarAction';
+import { startSetActive } from '../../actions/calendarAction';
 import { AddNewEventFab } from '../ui/AddNewEventFab';
 
 

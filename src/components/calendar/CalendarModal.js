@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Modal from 'react-modal'
 import DateTimePicker from 'react-datetime-picker'
 import moment from 'moment'
@@ -6,8 +6,8 @@ import Swal from 'sweetalert2'
 
 import { useForm } from '../../hook/useForm';
 import { useDispatch, useSelector } from 'react-redux'
-import { openModal } from '../actions/modalAction'
-import { addCalendar, deleteCalendar, startSetActive, updateCalendar } from '../actions/calendarAction'
+import { openModal } from '../../actions/modalAction'
+import { addCalendar, deleteCalendar, startSetActive, updateCalendar } from '../../actions/calendarAction'
 
 const customStyles = {
     content: {
