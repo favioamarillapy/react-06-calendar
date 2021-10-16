@@ -139,7 +139,7 @@ export const AuthScreen = () => {
                             <input
                                 type="submit"
                                 className="btnSubmit"
-                                value="Crear cuenta" />
+                                value="Register" />
                         </div>
                     </form>
                 </div>

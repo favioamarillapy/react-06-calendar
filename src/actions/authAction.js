@@ -54,11 +54,25 @@ export const startChecking = (user) => {
 
             dispatch(startAuth(types.AUTH_SIGNIN, body.data));
         } else {
+
+            localStorage.clear();
             dispatch(startCheckingFinish());
         }
     }
 }
 
 export const startCheckingFinish = () => ({ type: types.AUTH_CHECKING_FINISH });
+
+
+export const startLogout = () => {
+    return (dispatch) => {
+
+        localStorage.clear();
+        dispatch(logout());
+    }
+};
+
+export const logout = () => ({ type: types.AUTH_LOGOUT });
+
 
 export const startAuth = (type, payload) => ({ type, payload });
