@@ -7,7 +7,7 @@ import Swal from 'sweetalert2'
 import { useForm } from '../../hook/useForm';
 import { useDispatch, useSelector } from 'react-redux'
 import { openModal } from '../../actions/modalAction'
-import { addCalendar, deleteCalendar, startSetActive, updateCalendar } from '../../actions/calendarAction'
+import { deleteCalendar, startCalendarRegister, startCalendarUpdate, startSetActive } from '../../actions/calendarAction'
 
 const customStyles = {
     content: {
@@ -25,10 +25,11 @@ Modal.setAppElement('#root');
 
 export const CalendarModal = () => {
 
+    const { _id: uid, name: username } = useSelector(state => state.auth);
     const { isOpen } = useSelector(state => state.modal);
     const { active } = useSelector(state => state.calendar);
-    const { id, bgcolor, user } = active;
-
+    const { _id: id } = active;
+    
     const dispatch = useDispatch();
 
     const afterOpenModal = () => {
@@ -88,21 +89,20 @@ export const CalendarModal = () => {
 
         if (id) {
 
-            dispatch(updateCalendar({
+            dispatch(startCalendarUpdate({
                 ...formsInput,
-                id,
-                user,
-                bgcolor
-            }));
+                user: {
+                    id: uid,
+                    name: username
+                }
+            }, id));
 
         } else {
-            dispatch(addCalendar({
+            dispatch(startCalendarRegister({
                 ...formsInput,
-                id: new Date().getTime(),
-                bgcolor: '#fafafa',
                 user: {
-                    uid: 123456,
-                    name: 'Favio Amarilla Miño updated'
+                    id: uid,
+                    name: username
                 }
             }));
 
