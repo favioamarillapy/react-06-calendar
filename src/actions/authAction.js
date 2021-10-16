@@ -1,5 +1,5 @@
 import { types } from '../types/types'
-import { fecthNotUsingToken } from '../helpers/fetch'
+import { fecthNotUsingToken, fecthUsingToken } from '../helpers/fetch'
 import Swal from 'sweetalert2';
 
 
@@ -45,7 +45,7 @@ export const startChecking = (user) => {
 
     return async (dispatch) => {
 
-        const response = await fecthNotUsingToken('auth/renew', {}, 'GET');
+        const response = await fecthUsingToken('auth/renew', {}, 'GET');
         const body = await response.json();
 
         if (body.ok) {
