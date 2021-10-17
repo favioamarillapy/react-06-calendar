@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
@@ -9,7 +9,7 @@ import { CalendarEvent } from './CalendarEvent';
 import { CalendarModal } from './CalendarModal';
 import { openModal } from '../../actions/modalAction';
 import { useDispatch, useSelector } from 'react-redux';
-import { startSetActive } from '../../actions/calendarAction';
+import { startCalendarLoad, startSetActive } from '../../actions/calendarAction';
 import { AddNewEventFab } from '../ui/AddNewEventFab';
 
 
@@ -19,10 +19,11 @@ export const CalendarScreen = () => {
     const { events } = useSelector(state => state.calendar);
 
     const localizer = momentLocalizer(moment);
+    
+    useEffect(() => {
 
-    const onSelectEvent = (e) => {
-
-    }
+        dispatch(startCalendarLoad());
+    }, [])
 
     const onDoubleClick = (e) => {
 
@@ -49,7 +50,6 @@ export const CalendarScreen = () => {
                 endAccessor="end"
                 view={lastView}
                 components={{ event: CalendarEvent }}
-                onSelectEvent={onSelectEvent}
                 onDoubleClickEvent={onDoubleClick}
                 onView={onView}
             />

@@ -1,8 +1,24 @@
 import Swal from "sweetalert2";
+import { eventsFormat } from "../helpers/eventsFormat";
 import { fecthUsingToken } from "../helpers/fetch";
 import { types } from "../types/types"
 
 
+export const startCalendarLoad = (event) => {
+
+    return async (dispatch) => {
+
+        const response = await fecthUsingToken('event', event, 'GET');
+        const body = await response.json();
+
+        if (body.ok) {
+            const data = eventsFormat(body.data);
+            dispatch(startLoad(data));
+        } else {
+            Swal.fire(body.message);
+        }
+    }
+}
 
 export const startCalendarRegister = (event) => {
 
@@ -43,19 +59,17 @@ export const startCalendarDelete = (id) => {
 
     return async (dispatch) => {
 
-        const response = await fecthUsingToken('event/' + id, event, 'DELETE');
+        const response = await fecthUsingToken('event/' + id, {}, 'DELETE');
         const body = await response.json();
 
         if (body.ok) {
 
-            dispatch(updateCalendar(body.data));
-            dispatch(startSetList(body.data));
+            dispatch(deleteCalendar());
         } else {
             Swal.fire(body.message);
         }
     }
 }
-
 
 export const startSetActive = (calendar) => ({
     type: types.CALENDAR_ACTIVE,
@@ -67,16 +81,21 @@ export const addCalendar = (calendar) => ({
     payload: calendar
 });
 
-export const updateCalendar = (calendar) => ({
+const updateCalendar = (calendar) => ({
     type: types.CALENDAR_UPDATE,
     payload: calendar
 });
 
-export const deleteCalendar = () => ({
+const deleteCalendar = () => ({
     type: types.CALENDAR_DELETE
 });
 
-export const startSetList = (calendar) => ({
+const startSetList = (calendar) => ({
     type: types.CALENDAR_LIST,
     payload: calendar
+});
+
+const startLoad = (data) => ({
+    type: types.CALENDAR_LOAD,
+    payload: data
 });

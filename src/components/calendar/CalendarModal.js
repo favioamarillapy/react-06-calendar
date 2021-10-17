@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Modal from 'react-modal'
 import DateTimePicker from 'react-datetime-picker'
 import moment from 'moment'
@@ -7,7 +7,7 @@ import Swal from 'sweetalert2'
 import { useForm } from '../../hook/useForm';
 import { useDispatch, useSelector } from 'react-redux'
 import { openModal } from '../../actions/modalAction'
-import { deleteCalendar, startCalendarRegister, startCalendarUpdate, startSetActive } from '../../actions/calendarAction'
+import { deleteCalendar, startCalendarDelete, startCalendarRegister, startCalendarUpdate, startSetActive } from '../../actions/calendarAction'
 
 const customStyles = {
     content: {
@@ -19,36 +19,35 @@ const customStyles = {
         transform: 'translate(-50%, -50%)',
     },
 };
-
-
 Modal.setAppElement('#root');
+
+const now = moment().minutes(0).seconds(0).add(1, 'hours');
+const nowPlus1 = now.clone().add(1, 'hours');
+
+const initEvent = {
+    start: now.toDate(),
+    end: nowPlus1.toDate(),
+    title: '',
+    description: ''
+}
 
 export const CalendarModal = () => {
 
     const { _id: uid, name: username } = useSelector(state => state.auth);
     const { isOpen } = useSelector(state => state.modal);
-    const { active } = useSelector(state => state.calendar);
-    const { _id: id } = active;
-    
+    const { active: activeEvent } = useSelector(state => state.calendar);
+    const { _id: id } = activeEvent;
+
     const dispatch = useDispatch();
 
-    const afterOpenModal = () => {
-
-    }
 
     const closeModal = () => {
-
         dispatch(startSetActive({}));
-
         dispatch(openModal(false));
     }
 
-    const [formsInput, handleInputChange, formReset] = useForm({
-        start: active.start ? active.start : '',
-        end: active.end ? active.end : '',
-        title: active.title ? active.title : '',
-        description: active.description ? active.description : ''
-    });
+
+    const [formsInput, handleInputChange, formReset] = useForm(initEvent);
     const { start, end, title, description } = formsInput;
 
     const setStartDate = (e) => {
@@ -64,6 +63,16 @@ export const CalendarModal = () => {
             end: e,
         });
     }
+
+    useEffect(() => {
+        if (activeEvent) {
+            formReset(activeEvent);
+        } else {
+            formReset(initEvent);
+        }
+    }, [activeEvent])
+
+
 
     const handleSave = (e) => {
         e.preventDefault();
@@ -112,9 +121,10 @@ export const CalendarModal = () => {
         closeModal();
     }
 
-    const handleDelete = () => {
+    const handleDelete = (e) => {
+        e.preventDefault();
 
-        dispatch(deleteCalendar());
+        dispatch(startCalendarDelete(id));
 
         closeModal();
     }
@@ -124,7 +134,6 @@ export const CalendarModal = () => {
         <div>
             <Modal
                 isOpen={isOpen}
-                onAfterOpen={afterOpenModal}
                 onRequestClose={closeModal}
                 closeTimeoutMS={200}
                 style={customStyles}
@@ -133,7 +142,7 @@ export const CalendarModal = () => {
             >
 
                 {
-                    (active != null) ?
+                    (activeEvent != null) ?
                         (
                             <h1> Update Event </h1>
                         ) :
@@ -191,7 +200,7 @@ export const CalendarModal = () => {
                     </div>
 
                     <button
-                        type="submit"
+                        type="button"
                         className="btn btn-outline-primary btn-block"
                         onClick={handleSave}
                     >
@@ -202,7 +211,7 @@ export const CalendarModal = () => {
                     {
                         (id) && (
                             <button
-                                type="submit"
+                                type="button"
                                 className="btn btn-outline-primary btn-block"
                                 onClick={handleDelete}
                             >

@@ -9,6 +9,12 @@ const initialState = {
 export const calendarReducer = (state = initialState, action) => {
 
     switch (action.type) {
+        case types.CALENDAR_LOAD:
+            return {
+                ...state,
+                events: [...action.payload]
+            }
+
         case types.CALENDAR_LIST:
             return {
                 ...state
