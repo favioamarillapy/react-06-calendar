@@ -19,7 +19,7 @@ export const CalendarScreen = () => {
     const { events } = useSelector(state => state.calendar);
 
     const localizer = momentLocalizer(moment);
-    
+
     useEffect(() => {
 
         dispatch(startCalendarLoad());
@@ -52,6 +52,10 @@ export const CalendarScreen = () => {
                 components={{ event: CalendarEvent }}
                 onDoubleClickEvent={onDoubleClick}
                 onView={onView}
+                eventPropGetter={event => {
+                    const backgroundColor = "#007bff";
+                    return { style: { backgroundColor } };
+                }}
             />
 
 

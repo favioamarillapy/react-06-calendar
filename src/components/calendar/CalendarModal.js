@@ -65,8 +65,12 @@ export const CalendarModal = () => {
     }
 
     useEffect(() => {
-        if (activeEvent) {
-            formReset(activeEvent);
+        if (id) {
+            formReset({
+                ...activeEvent,
+                start: moment(activeEvent.start).toDate(),
+                end: moment(activeEvent.end).toDate()
+            });
         } else {
             formReset(initEvent);
         }
@@ -142,12 +146,12 @@ export const CalendarModal = () => {
             >
 
                 {
-                    (activeEvent != null) ?
+                    (id) ?
                         (
-                            <h1> Update Event </h1>
+                            <h3> Update Event </h3>
                         ) :
                         (
-                            <h1> New Event </h1>
+                            <h3> New Event </h3>
                         )
                 }
 
@@ -212,7 +216,7 @@ export const CalendarModal = () => {
                         (id) && (
                             <button
                                 type="button"
-                                className="btn btn-outline-primary btn-block"
+                                className="btn btn-outline-danger btn-block"
                                 onClick={handleDelete}
                             >
                                 <i className="far fa-trash"></i>
